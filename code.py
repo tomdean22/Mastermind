@@ -1,5 +1,5 @@
 from collections import namedtuple
-from random import sample, shuffle, randint
+from random import sample, shuffle
 
 
 class Colors:
@@ -21,6 +21,7 @@ class SecretCode:
     DEFAULT_SIZE = 3
 
     def __init__(self, size=DEFAULT_SIZE):
+        """Initialize a new secret code"""
         assert(size < len(Colors.colors)), f'Maximum: {len(Colors.colors)-1}'
         self._size = size
         self.code = self._newCode()
@@ -32,31 +33,15 @@ class SecretCode:
         return iter(self.code)
 
     def _newCode(self):
-        # a random list of non-repeating numbers with length: self._size and range: 0 - len(Colors.colors)
+        """
+        Generates a random sample of non-repeating numbers  with length: self._size and range: 0 ≤ i < len(Colors.colors).
+        Returns a list of namedTuples (position, color) using the sample as the color ordering.
+        """
         selection = sample(range(len(Colors.colors)), self._size)
         return [Pair(pos, color) for pos, color in enumerate([Colors.colors[i] for i in selection])]
 
     def resetCode(self, size=DEFAULT_SIZE):
+        """Return a new secret code"""
         assert(size < len(Colors.colors)), f'Maximum: {len(Colors.colors)-1}'
         self._size = size
         self.code = self._newCode()
-
-
-
-
-
-
-
-# - create code
-# - collect guesses from player
-# - iterate through the positions
-#   • list available colors
-#   • record choice
-#   • clean choice
-#     > if clean: create Card(pos, choice) and append to self._guesses
-#     > if dirty: ask again
-# - check guesses
-#   • iterate through guesses and code
-#     > pos & color are correct: append black card to self.clues
-#     > color is correct, but in the wrong position: append brown card to self.clues
-#     > neither are correct: pass
