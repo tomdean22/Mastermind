@@ -21,15 +21,12 @@ class SecretCode:
     DEFAULT_SIZE = 3
 
     def __init__(self, size=DEFAULT_SIZE):
-        assert(size < len(Colors.colors)), f'There are {len(Colors.colors)} colors!'
+        assert(size < len(Colors.colors)), f'Maximum: {len(Colors.colors)-1}'
         self._size = size
         self.code = self._newCode()
 
     def __repr__(self):
         return ' '.join([str(pair) for pair in self.code])
-
-    def __len__(self):
-        return self._size
 
     def __iter__(self):
         return iter(self.code)
@@ -40,6 +37,7 @@ class SecretCode:
         return [Pair(pos, color) for pos, color in enumerate([Colors.colors[i] for i in selection])]
 
     def resetCode(self, size=DEFAULT_SIZE):
+        assert(size < len(Colors.colors)), f'Maximum: {len(Colors.colors)-1}'
         self._size = size
         self.code = self._newCode()
 
