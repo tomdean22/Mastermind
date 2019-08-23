@@ -23,7 +23,7 @@ class SecretCode:
     def __init__(self, size=DEFAULT_SIZE):
         assert(size < len(Colors.colors)), f'There are {len(Colors.colors)} colors!'
         self._size = size
-        self._code = None
+        self.code = self._newCode()
 
     def __repr__(self):
         return ' '.join([str(pair) for pair in self.code])
@@ -39,15 +39,9 @@ class SecretCode:
         selection = sample(range(len(Colors.colors)), self._size)
         return [Pair(pos, color) for pos, color in enumerate([Colors.colors[i] for i in selection])]
 
-    @property
-    def code(self):
-        if not self._code:
-            self._code = self._newCode()
-        return self._code
-
     def resetCode(self, size=DEFAULT_SIZE):
         self._size = size
-        self._code = None
+        self.code = self._newCode()
 
 
 
